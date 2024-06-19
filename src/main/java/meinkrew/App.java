@@ -8,13 +8,13 @@ import java.util.List;
 public class App{
     public static void main(String[] args) {
         // Set the path to your WebDriver executable, this should be taken from args instead
-        System.setProperty("webdriver.chrome.driver", "/Users/james/java_stuff/Mein-Krew-II/chromedriver-mac-arm64/chromedriver");
+        System.setProperty("webdriver.chrome.driver", "/Users//java_stuff/Mein-Krew-II/chromedriver-mac-arm64/chromedriver");
 
         WebDriver driver = new ChromeDriver();
 
         try {
             // Navigate to the Twitch stream, this should follow the leader around instead
-            driver.get("https://www.twitch.tv/summit1g");
+            driver.get("https://");
 
             // Allow some time for the page to load and for the user to log in if necessary
             Thread.sleep(10000);
