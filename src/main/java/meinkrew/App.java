@@ -1,8 +1,6 @@
 package meinkrew;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.List;
@@ -15,12 +13,6 @@ public class App{
         WebDriver driver = new ChromeDriver();
 
         try {
-            /* FINALLY GETS USERNAMES:MESSAGES BUT CRASHES AFTER AROUND 100 messages
-            * Try:
-> Run with --stacktrace option to get the stack trace.
-> Run with --info or --debug option to get more log output.
-> Run with --scan to get full insights.
-             */
             // Navigate to the Twitch stream, this should follow the leader around instead
             driver.get("https://www.twitch.tv/summit1g");
 
@@ -30,26 +22,26 @@ public class App{
             // Locate the chat container
             WebElement chatContainer = driver.findElement(By.className("chat-scrollable-area__message-container"));
 
-                while (true) {
-                    // Fetch all chat messages
-                    List<WebElement> messages = chatContainer.findElements(By.cssSelector(".chat-line__message"));
+            while (true) {
+                Thread.sleep(10000); // dont remove this
+                // Fetch all chat messages
+                List<WebElement> messages = chatContainer.findElements(By.cssSelector(".chat-line__message"));
 
-                    for (WebElement messageElement : messages) {
-                        // Extract username
-                        WebElement usernameElement = messageElement.findElement(By.className("chat-author__display-name"));
-                        String username = usernameElement.getText();
+                for (WebElement messageElement : messages) {
+                    // Extract username
+                    WebElement usernameElement = messageElement.findElement(By.className("chat-author__display-name"));
+                    String username = usernameElement.getText();
 
-                        // Extract message text
+                    try {
                         WebElement messageTextElement = messageElement.findElement(By.className("text-fragment"));
                         String messageText = messageTextElement.getText();
-
                         // Print the username and message
                         System.out.println(username + ": " + messageText);
+                    } catch (NoSuchElementException e) {
+                        System.out.println("Element does not exist, continuing");
                     }
-
-                    // Wait for a short period before fetching new messages
-                    Thread.sleep(5000);
                 }
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
